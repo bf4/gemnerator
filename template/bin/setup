@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require 'pathname'
+require 'bundler/setup'
+require 'rake'
+bootstrap = Class.new do
+  include Rake::DSL
+  APP_ROOT = Pathname File.expand_path('../..', __FILE__)
+
+  def repo_root
+    APP_ROOT
+  end
+
+  def project_dir
+    @project_dir ||= ENV.fetch('PROJECT_DIR') { File.expand_path('~') + '/projects' }
+  end
+
+  def bundle
+    sh %(bundle check || bundle || bundle update)
+  end
+end.new
+bootstrap.bundle

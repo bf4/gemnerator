@@ -1,0 +1,9 @@
+require 'bundler/setup'
+require 'rake'
+pwd = File.expand_path('..', __FILE__)
+
+if Rake::Task.task_defined?(:rubocop)
+  task default: [:spec, :rubocop]
+else
+  task default: [:spec]
+end
